@@ -1,0 +1,298 @@
+:root{
+  --bg: #f7f8fb;
+  --card: #ffffff;
+  --muted: #4b5563;
+  --accent: #2563eb;
+  --accent-600: #1d4ed8;
+  --success: #10b981;
+  --success-700: #059669;
+  --danger: #ef4444;
+  --glass: rgba(37,99,235,0.08);
+  --radius: 14px;
+  --shadow: 0 14px 40px rgba(16,24,40,0.10);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  background: linear-gradient(180deg, #f0f6ff, #eef2ff 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+  color:#0b1220;
+}
+
+/* App container */
+.app{
+  width:100%;
+  max-width:720px;
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:28px;
+  box-shadow:var(--shadow);
+  text-align:center;
+  position:relative;
+  overflow:visible;
+}
+
+/* Title */
+.title{
+  margin:0 0 10px 0;
+  font-weight:800;
+  font-size:1.6rem;
+  letter-spacing:-0.3px;
+  color:#0f172a;
+}
+
+/* Form */
+.task-form{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:center;
+  margin-bottom:14px;
+}
+
+.task-input{
+  flex:1 1 auto;
+  min-width:0;
+  padding:14px 14px;
+  border-radius:12px;
+  border:1px solid #e6e9f2;
+  outline:none;
+  font-size:1rem;
+  transition:box-shadow .15s, border-color .15s, transform .06s;
+  background:transparent;
+}
+.task-input:focus{ border-color:var(--accent); box-shadow:0 12px 40px rgba(37,99,235,0.08); transform:translateY(-1px); }
+
+.btn{
+  background:linear-gradient(180deg,var(--accent),var(--accent-600));
+  color:white;
+  padding:12px 16px;
+  border-radius:12px;
+  border:0;
+  font-weight:800;
+  cursor:pointer;
+  font-size:0.95rem;
+  box-shadow:0 8px 20px rgba(37,99,235,0.14);
+  transition:transform .12s ease, box-shadow .12s;
+}
+.btn:active{ transform:translateY(1px) }
+
+/* Progress */
+.progress-wrap{
+  margin:6px 0 10px 0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.progress-bar{
+  height:10px;
+  background:linear-gradient(90deg,#e6eefc,#f2f8ff);
+  border-radius:999px;
+  width:100%;
+  overflow:hidden;
+  position:relative;
+  box-shadow:inset 0 -2px 6px rgba(16,24,40,0.03);
+}
+.progress-bar::after{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--success));
+  border-radius:999px;
+  transition:width .6s cubic-bezier(.2,.9,.2,1);
+  box-shadow:0 6px 18px rgba(37,99,235,0.12);
+}
+.progress-label{ font-size:0.9rem; color:#6b7280; min-width:68px; text-align:right; }
+
+/* Task list */
+.list-wrap{ text-align:left; margin-top:6px; }
+
+.task-list{
+  list-style:none;
+  margin:0;
+  padding:6px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+/* Task item */
+.task{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  background:linear-gradient(180deg,#ffffff,#fbfbff);
+  padding:14px;
+  border-radius:12px;
+  border:1px solid rgba(13,42,148,0.04);
+  box-shadow:0 6px 18px rgba(12,20,40,0.04);
+  transform-origin:left center;
+  animation: dropIn .28s cubic-bezier(.2,.9,.2,1) both;
+}
+
+/* drop in */
+@keyframes dropIn {
+  from { opacity:0; transform: translateY(-8px) scale(.995); }
+  to   { opacity:1; transform: translateY(0) scale(1); }
+}
+
+/* Animations for removal */
+@keyframes shrinkOut {
+  from { opacity:1; transform: scale(1); height:60px; margin-bottom:12px; }
+  to   { opacity:0; transform: scale(.96) translateY(8px); height:0; margin-bottom:0; }
+}
+
+/* task text */
+.task-text{
+  flex:1 1 auto;
+  min-width:0;
+  font-size:1rem;
+  color:var(--muted);
+  word-break:break-word;
+  padding:6px 8px;
+  border-radius:8px;
+}
+.task-text[contenteditable="true"]{
+  outline:2px dashed rgba(37,99,235,0.12);
+  background:rgba(37,99,235,0.02);
+}
+
+/* Completed state */
+.task.completed{
+  background:linear-gradient(180deg,#fbfffb,#f7fff8);
+  border-color:rgba(16,185,129,0.06);
+  transform: translateX(2px);
+}
+.task.completed .task-text{
+  text-decoration:line-through;
+  color:#94a3b8;
+  opacity:0.95;
+  filter:grayscale(.1);
+}
+
+/* check button */
+.check{
+  width:40px;
+  height:40px;
+  display:inline-grid;
+  place-items:center;
+  border-radius:10px;
+  border:0;
+  background:linear-gradient(180deg,#f6f8ff,#fff);
+  cursor:pointer;
+  transition:transform .18s cubic-bezier(.2,.9,.2,1), box-shadow .18s;
+  box-shadow:0 6px 18px rgba(37,99,235,0.06);
+}
+.check .check-svg{ color:transparent; transition:all .18s ease; transform:scale(.9); stroke:rgba(15,23,42,0.18); }
+.check.checked{
+  background:linear-gradient(180deg,var(--success),var(--success-700));
+  box-shadow:0 12px 30px rgba(16,185,129,0.12);
+  transform:scale(1.06);
+}
+.check.checked .check-svg{ color:white; stroke:rgba(255,255,255,0.95); transform:scale(1); }
+
+/* small actions */
+.actions{ display:flex; gap:8px; align-items:center; }
+.icon-btn{ border:0; background:transparent; padding:6px; border-radius:8px; cursor:pointer; font-size:1rem; }
+.icon-btn:hover{ background:#f3f4f6 }
+
+/* celebration overlay */
+.celebration{
+  position:absolute;
+  inset:20px;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.celebration.show{ display:flex; pointer-events:auto; }
+.celebration-banner{
+  background:linear-gradient(90deg,#ffffff,#f8fffb);
+  border-radius:12px;
+  padding:16px 22px;
+  font-weight:800;
+  color:var(--success-700);
+  box-shadow:0 18px 40px rgba(16,185,129,0.08);
+  transform:translateY(-20px) scale(.98);
+  animation: bannerPop .42s cubic-bezier(.2,.9,.2,1) both;
+  z-index:50;
+}
+@keyframes bannerPop {
+  from { opacity:0; transform:translateY(-24px) scale(.94); }
+  to   { opacity:1; transform:translateY(0) scale(1); }
+}
+.confetti-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:visible;
+  z-index:40;
+}
+#celebration-close{
+  position:absolute;
+  top:18px;
+  right:18px;
+  background:transparent;
+  padding:8px;
+  border-radius:10px;
+  cursor:pointer;
+  border:0;
+  z-index:60;
+}
+/* --- Add this to style.css (near .celebration) --- */
+
+/* Let clicks pass through the celebration overlay; only the close button is interactive */
+.celebration {
+  pointer-events: none; /* don't block underlying UI */
+}
+
+/* Banner stays decorative — clicks go to underlying controls */
+.celebration.show .celebration-banner {
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Confetti must never capture pointer events */
+.confetti-layer,
+.confetti-layer * {
+  pointer-events: none;
+}
+
+/* Keep only the close button interactive */
+#celebration-close {
+  pointer-events: auto;
+  z-index: 60;
+}
+
+/* footer meta */
+.footer{ margin-top:20px; text-align:center; color:#6b7280; font-size:0.9rem; }
+.meta{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:8px; }
+.counter{ font-weight:700; color:#374151; }
+.controls{ display:flex; gap:8px; align-items:center; }
+.small-btn{
+  border:0;
+  background:#f3f4f6;
+  padding:8px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+/* responsive */
+@media (max-width:520px){
+  .app{padding:18px}
+  .check{ width:36px; height:36px; }
+  .task{ padding:12px; }
+  .meta{ flex-direction:column; align-items:flex-start; gap:6px; }
+}
